@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471254723758",
+    "project_id": "pokevault-ccb94",
+    "storage_bucket": "pokevault-ccb94.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471254723758:android:8b798d5f4cd7e630c4513f",
+        "android_client_info": {
+          "package_name": "com.example.pokevault"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzV_8IdE_lfqMVM80zJL9lW8gjLaSrkoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
