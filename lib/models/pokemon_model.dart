@@ -9,6 +9,7 @@ class PokemonModel {
   final String imageUrl;
   final String uid;
   final Timestamp? createdAt;
+  final bool isFavorite;
 
   PokemonModel({
     this.id = '',
@@ -19,6 +20,7 @@ class PokemonModel {
     required this.imageUrl,
     required this.uid,
     this.createdAt,
+    this.isFavorite = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class PokemonModel {
       'image_url': imageUrl,
       'uid': uid,
       'created_at': createdAt ?? FieldValue.serverTimestamp(),
+      'is_favorite': isFavorite,
     };
   }
 
@@ -44,6 +47,7 @@ class PokemonModel {
       imageUrl: data['image_url'] ?? '',
       uid: data['uid'] ?? '',
       createdAt: data['created_at'] as Timestamp?,
+      isFavorite: data['is_favorite'] ?? false,
     );
   }
 }

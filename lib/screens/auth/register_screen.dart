@@ -157,8 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         title: const Text("Male"),
                         value: "Male",
                         groupValue: _selectedGender,
-                        activeColor: Colors.blue, // Biru
-                        secondary: const Icon(Icons.male, color: Colors.blue),
+                        activeColor: Colors.blue,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           setState(() => _selectedGender = value!);
@@ -171,8 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         title: const Text("Female"),
                         value: "Female",
                         groupValue: _selectedGender,
-                        activeColor: Colors.pink, // Pink
-                        secondary: const Icon(Icons.female, color: Colors.pink),
+                        activeColor: Colors.pink,
                         contentPadding: EdgeInsets.zero,
                         onChanged: (value) {
                           setState(() => _selectedGender = value!);

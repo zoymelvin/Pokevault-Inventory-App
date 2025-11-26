@@ -52,7 +52,7 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // 1. LOGIKA RANDOM STATS (Sesuai Request)
+      // 1. LOGIKA RANDOM STATS
       final random = Random();
       int randomLevel = random.nextInt(100) + 1; // Level 1 - 100
       int randomCP = random.nextInt(1900) + 1000; // CP 100 - 2000
@@ -68,7 +68,7 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
         level: randomLevel,
         cp: randomCP,
         imageUrl: _imageController.text.trim(),
-        uid: user.uid, // PENTING: ID Pemilik
+        uid: user.uid,
       );
 
       // 4. Kirim ke Firestore

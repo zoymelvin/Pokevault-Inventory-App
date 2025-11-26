@@ -39,4 +39,16 @@ class DatabaseService {
     }
   }
 
+  // Fungsi menambhkan Pokemon ke favorite
+
+  Future <void> togglefavorite(String docId, bool currentStatus) async {
+    try {
+      await _pokemonRef.doc(docId).update({
+        'is_favorite': !currentStatus,
+      });
+    } catch (e) {
+      print("Gagal menambhkan pokemon ke favorite");
+      rethrow;
+    }
+  }
 }

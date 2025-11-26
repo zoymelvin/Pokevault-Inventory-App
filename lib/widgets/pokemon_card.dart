@@ -44,7 +44,7 @@ class PokemonCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. FOTO POKEMON (Background Abu Tipis biar fokus)
+          // 1. FOTO POKEMON
           Expanded(
             flex: 3,
             child: SizedBox(

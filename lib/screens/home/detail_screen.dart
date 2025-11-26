@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pokevault/services/database_service.dart';
 import '../../models/pokemon_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final PokemonModel pokemon;
-  final String trainerName; // owner display (masih kepake di Entry Info aja)
+  final String trainerName;
 
   const DetailScreen({
     super.key,
@@ -17,8 +18,15 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  bool isFav = false;
+  late bool isFav;
   int _activeTab = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    isFav = widget.pokemon.isFavorite;
+  }
 
   Color _getTypeBaseColor(String type) {
     switch (type.toLowerCase()) {
@@ -110,7 +118,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   ),
 
-                  // Gambar memenuhi header (boleh crop)
+                  // Gambar memenuhi header
                   Positioned.fill(
                     child: Hero(
                       tag: p.id,
@@ -174,39 +182,42 @@ class _DetailScreenState extends State<DetailScreen> {
                   children: [
                     // name + favorite icon
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: Text(
-                            p.name,
+                            widget.pokemon.name,
                             style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: -0.2,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black87,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        InkWell(
-                          onTap: () => setState(() => isFav = !isFav),
-                          borderRadius: BorderRadius.circular(999),
+                        // Tombol Favorit
+                        GestureDetector(
+                          onTap: () async {
+                            setState(() => isFav = !isFav); // Update UI Instan
+                            await DatabaseService().togglefavorite(widget.pokemon.id, !isFav); // Update DB
+                          },
                           child: Container(
-                            height: 40,
-                            width: 40,
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white,
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.black12),
-                              boxShadow: const [
+                              color: Colors.white,
+                              boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 2),
+                                  color: Colors.grey.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 )
                               ],
                             ),
                             child: Icon(
-                              Icons.star,
-                              color: isFav ? Colors.amber : Colors.black26,
+                              Icons.star_rounded,
+                              color: isFav ? Colors.amber : Colors.grey.shade300,
+                              size: 32,
                             ),
                           ),
                         ),
