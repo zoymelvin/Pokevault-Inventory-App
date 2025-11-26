@@ -13,6 +13,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // 1. Controller untuk menangkap teks inputan user
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final authService = AuthService();
+
   
   // 2. State untuk interaksi UI
   bool _isLoading = false;      // Untuk memunculkan loading spinner
@@ -72,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  "Login to PC",
+                  "Login \nPokeVault",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
@@ -159,11 +161,53 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: _isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text(
-                            "Login to PC",
+                            "Login",
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                   ),
                 ),
+
+                const SizedBox(height: 10),
+
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                  "Or Login",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.grey),
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+                SizedBox(
+  height: 50,
+  child: ElevatedButton(
+    onPressed: () async {
+      final user = await authService.signInWithGoogle();
+
+      if (user != null) {
+        // Jika sukses login Google → pindah ke Home
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Jika gagal login Google
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Google login gagal")),
+        );
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.redAccent,
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    ),
+    child: const Text(
+      "Login Google",
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    ),
+  ),
+),
+
 
                 const SizedBox(height: 24),
 
