@@ -12,7 +12,20 @@
           "package_name": "com.example.pokevault"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "471254723758-99t11odsgn0u0p8qri9rebln1ag121ab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pokevault",
+            "certificate_hash": "93a271afdfefab7e6bb5dd18da520cd281adeab4"
+          }
+        },
+        {
+          "client_id": "471254723758-i5aasgnuas0bl8t8132ark22npeva33p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAzV_8IdE_lfqMVM80zJL9lW8gjLaSrkoo"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471254723758-i5aasgnuas0bl8t8132ark22npeva33p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
