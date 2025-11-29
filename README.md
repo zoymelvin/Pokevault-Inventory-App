@@ -115,11 +115,3 @@ flutter run
 
 ---
 
-## 👨‍💻 Author
-
-**Joy Melvin**  
-*Aspiring Mobile Developer | Pokemon Enthusiast*
-
-> "Gotta Catch 'Em All!" ⚪🔴
-
----
