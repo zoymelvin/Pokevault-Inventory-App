@@ -48,9 +48,6 @@ class AuthService {
   // 2b. LOGIN DENGAN GOOGLE (refleksi dari AuthHelper lamamu)
   Future<User?> signInWithGoogle() async {
     try {
-      // Inisialisasi GoogleSignIn (v7.2.0)
-      // Sama konsep dengan AuthHelper:
-      //   googleSignIn.initialize(clientId: ..., serverClientId: ...)
       unawaited(
         _googleSignIn.initialize(
           clientId: clientId,

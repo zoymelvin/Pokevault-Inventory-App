@@ -14,17 +14,15 @@ class ProfileScreen extends StatelessWidget {
     final String uid = user?.uid.substring(0, 5).toUpperCase() ?? "0000"; 
 
     return Scaffold(
-      backgroundColor: Colors.white, // Revisi: Background Putih Polos
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              // --- 1. PROFILE HEADER (AVATAR JM) ---
               Center(
                 child: Column(
                   children: [
-                    // Avatar Bulat "JM"
                     Container(
                       width: 100,
                       height: 100,
@@ -45,7 +43,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // Nama & ID
                     const Text(
                       "Joy Melvin",
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -55,7 +52,6 @@ class ProfileScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.grey[500], fontSize: 14),
                     ),
                     const SizedBox(height: 12),
-                    // Chip Favorite Element
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
@@ -77,7 +73,6 @@ class ProfileScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // --- 2. STATS ROW (STORED - FAVORITES - BADGES) ---
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -87,7 +82,6 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // A. REAL DATA: Jumlah Stored Pokemon
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('pokemon_inventory')
@@ -102,7 +96,6 @@ class ProfileScreen extends StatelessWidget {
                         return _buildStatItem(Icons.folder, "Stored", count);
                       },
                     ),
-                    // B. DUMMY DATA (Sesuai UI)
                     _buildStatItem(Icons.star, "Favorites", "2"),
                     _buildStatItem(Icons.verified, "Badges", "3"),
                   ],
@@ -111,7 +104,6 @@ class ProfileScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // --- 3. ACCOUNT DETAILS CARD ---
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Account Details", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
@@ -129,18 +121,17 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildDetailRow("Email", email), // Real Data
+                    _buildDetailRow("Email", email), 
                     const Divider(height: 24),
-                    _buildDetailRow("Gender", "Male"), // Static (Sesuai Gambar)
+                    _buildDetailRow("Gender", "Male"), 
                     const Divider(height: 24),
-                    _buildDetailRow("Age", "21 years"), // Static (Sesuai Gambar)
+                    _buildDetailRow("Age", "21 years"), 
                   ],
                 ),
               ),
 
               const SizedBox(height: 24),
 
-              // --- 4. ACHIEVEMENTS GRID (Visual Only) ---
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text("Achievements", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
@@ -149,10 +140,10 @@ class ProfileScreen extends StatelessWidget {
               
               // Grid Menu Kecil
               GridView.count(
-                shrinkWrap: true, // Agar tidak error di dalam ScrollView
+                shrinkWrap: true, 
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 3, // 3 Kotak per baris
-                childAspectRatio: 1.2, // Rasio Lebar : Tinggi
+                crossAxisCount: 3, 
+                childAspectRatio: 1.2, 
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
                 children: const [
@@ -164,18 +155,16 @@ class ProfileScreen extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              // --- 5. LOGOUT BUTTON ---
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // Panggil fungsi Logout
+
                     await AuthService().signOut();
-                    // Wrapper akan otomatis mendeteksi dan melempar ke Login Page
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF2E54), // Warna Merah Pink cerah
+                    backgroundColor: const Color(0xFFFF2E54), 
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -195,8 +184,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // --- WIDGET KECIL (HELPER) ---
-
   // Widget untuk baris Email, Gender, Age
   Widget _buildDetailRow(String label, String value) {
     return Row(
@@ -208,7 +195,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Widget untuk Stats (Stored, Favorite, Badges)
   Widget _buildStatItem(IconData icon, String label, String count) {
     return Column(
       children: [
@@ -222,7 +208,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-// Widget Khusus Card Achievement
 class _AchievementCard extends StatelessWidget {
   final IconData icon;
   final String label;

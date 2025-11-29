@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
-import 'register_screen.dart'; // Nanti kita buat file ini setelah ini
+import 'register_screen.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,19 +10,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // 1. Controller untuk menangkap teks inputan user
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final authService = AuthService();
 
   
   // 2. State untuk interaksi UI
-  bool _isLoading = false;      // Untuk memunculkan loading spinner
-  bool _isObscure = true;       // Untuk sembunyikan password (mata)
+  bool _isLoading = false;
+  bool _isObscure = true;       
 
   // 3. Fungsi Login
   void _login() async {
-    // Validasi input kosong
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Email dan Password tidak boleh kosong!")),
@@ -30,17 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    setState(() => _isLoading = true); // Mulai loading
+    setState(() => _isLoading = true);
 
     try {
-      // Panggil Service Auth yang sudah kita buat
       await AuthService().loginWithEmail(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      // Jika sukses, Wrapper otomatis mengarahkan ke Home.
     } catch (e) {
-      // Jika gagal, munculkan pesan error
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -50,14 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } finally {
-      if (mounted) setState(() => _isLoading = false); // Stop loading
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Revisi 1: Background Putih Polos
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -66,9 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // --- LOGO AREA ---
                 const Icon(
-                  Icons.catching_pokemon, // Ikon Pokeball bawaan Flutter
+                  Icons.catching_pokemon,
                   size: 80,
                   color: Colors.redAccent,
                 ),
@@ -112,14 +106,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Password Field
                 TextField(
                   controller: _passwordController,
-                  obscureText: _isObscure, // Bisa diintip/tutup
+                  obscureText: _isObscure,
                   decoration: InputDecoration(
                     labelText: "Password",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     prefixIcon: const Icon(Icons.lock_outline),
-                    // Revisi 2: Icon Mata (Visibility Toggle)
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isObscure ? Icons.visibility_off : Icons.visibility,
@@ -132,12 +125,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                
-                // Forgot Password (Opsional Visual Saja)
+
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {}, // Kosongkan dulu fiturnya
+                    onPressed: () {},
                     child: const Text(
                       "Forgot password?",
                       style: TextStyle(color: Colors.redAccent),
@@ -185,10 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
       final user = await authService.signInWithGoogle();
 
       if (user != null) {
-        // Jika sukses login Google → pindah ke Home
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        // Jika gagal login Google
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Google login gagal")),
         );
@@ -218,7 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text("Belum punya Pokedex? "),
                     GestureDetector(
                       onTap: () {
-                        // Navigasi ke halaman Register
                         Navigator.push(
                           context,
                           MaterialPageRoute(

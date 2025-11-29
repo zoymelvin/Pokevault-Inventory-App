@@ -10,21 +10,16 @@ class InventoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Ambil ID user yang sedang login
     final user = FirebaseAuth.instance.currentUser;
     final String uid = user?.uid ?? '';
-
-    // CEK UKURAN LAYAR (RESPONSIVE LOGIC)
-    // Jika lebar layar > 600, anggap Tablet (3 kolom), selain itu HP (2 kolom)
     final double screenWidth = MediaQuery.of(context).size.width;
     final int crossAxisCount = screenWidth > 600 ? 3 : 2;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5FA), // Background agak abu muda biar kartu pop-up
+      backgroundColor: const Color(0xFFF5F5FA),
       body: SafeArea(
         child: Column(
           children: [
-            // --- HEADER & SEARCH BAR (Visual Saja) ---
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -39,7 +34,6 @@ class InventoryScreen extends StatelessWidget {
                           Text("PokeVault", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                         ],
                       ),
-                      // ID User kecil di pojok kanan
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
@@ -48,7 +42,7 @@ class InventoryScreen extends StatelessWidget {
                           children: [
                             const Icon(Icons.bolt, color: Colors.orange, size: 16),
                             const SizedBox(width: 4),
-                            Text("ID #${uid.substring(0, 4)}", // Tampilkan 4 huruf ID saja
+                            Text("ID #${uid.substring(0, 4)}",
                                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                           ],
                         ),
@@ -74,8 +68,6 @@ class InventoryScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-            // --- LIST INVENTORY (STREAM BUILDER) ---
             Expanded(
               child: StreamBuilder<List<PokemonModel>>(
                 // Memanggil fungsi 'getPokemonStream' dari DatabaseService
@@ -105,14 +97,12 @@ class InventoryScreen extends StatelessWidget {
                       ),
                     );
                   }
-
-                  // 4. Data Ada -> Tampilkan Grid
                   return GridView.builder(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                     // LOGIKA GRID: 2 Baris (HP) atau 3 Baris (Tablet)
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount, 
-                      childAspectRatio: 0.70, // Rasio Lebar : Tinggi kartu (0.7 agak tinggi)
+                      childAspectRatio: 0.70, 
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
                     ),
@@ -144,8 +134,8 @@ class InventoryScreen extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () async {
-                                    Navigator.pop(context); // Tutup dialog
-                                    // Panggil fungsi hapus database
+                                    Navigator.pop(context);
+
                                     await DatabaseService().deletePokemon(pokemon.id);
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text("Bye bye, ${pokemon.name}!")),

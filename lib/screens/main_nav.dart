@@ -11,14 +11,12 @@ class MainNav extends StatefulWidget {
 }
 
 class _MainNavState extends State<MainNav> {
-  // 1. Index halaman yang sedang dipilih (0 = My PC, 1 = Catch, 2 = Profile)
   int _selectedIndex = 0;
 
-  // 2. Daftar Halaman (Urutannya harus sesuai dengan icon di bawah)
   final List<Widget> _screens = [
-    const InventoryScreen(),   // Halaman 0: List Pokemon
-    const AddPokemonScreen(),  // Halaman 1: Form Tambah
-    const ProfileScreen(),     // Halaman 2: Profil & Logout
+    const InventoryScreen(),  
+    const AddPokemonScreen(),  
+    const ProfileScreen(),    
   ];
 
   // 3. Fungsi saat tombol navigasi ditekan
@@ -31,29 +29,24 @@ class _MainNavState extends State<MainNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Body akan berubah sesuai index yang dipilih
       body: _screens[_selectedIndex],
-      
-      // Bottom Navigation Bar
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.redAccent, // Merah Pokemon saat aktif
-        unselectedItemColor: Colors.grey,    // Abu-abu saat tidak aktif
+        selectedItemColor: Colors.redAccent, 
+        unselectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed, // Supaya labelnya muncul terus
+        type: BottomNavigationBarType.fixed,
         items: const [
-          // Menu 1: My PC (Inventory)
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view_rounded),
             label: 'Inventory',
           ),
-          // Menu 2: Catch (Tambah Data)
           BottomNavigationBarItem(
-            icon: Icon(Icons.catching_pokemon), // Atau Icons.add_circle
+            icon: Icon(Icons.catching_pokemon),
             label: 'Catch',
           ),
-          // Menu 3: Trainer (Profile)
           BottomNavigationBarItem(
             icon: Icon(Icons.person_pin),
             label: 'Trainer',

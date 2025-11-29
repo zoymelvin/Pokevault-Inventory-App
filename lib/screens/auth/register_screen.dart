@@ -9,13 +9,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // 1. Controllers
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
 
-  // 2. State Variables
   bool _isLoading = false;
   bool _isObscure = true;
   String _selectedGender = 'Male';
@@ -33,14 +31,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // Panggil Service Auth untuk buat akun
       await AuthService().registerWithEmail(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
       
       await AuthService().signOut();
-      // Jika sukses, tutup halaman register (kembali ke login/wrapper akan urus sisanya)
       if (mounted) {
         Navigator.pop(context); 
       }
@@ -61,11 +57,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Revisi 1: Background Putih
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black), // Tombol back hitam
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
         child: Center(
@@ -75,7 +71,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // --- LOGO AREA ---
                 const Icon(
                   Icons.catching_pokemon,
                   size: 60,
@@ -98,10 +93,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(color: Colors.grey, fontSize: 14),
                 ),
                 const SizedBox(height: 32),
-
-                // --- FORM INPUTS ---
                 
-                // 1. Username
+                // Username
                 TextField(
                   controller: _usernameController,
                   decoration: InputDecoration(
@@ -115,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // 2. Email
+                // Email
                 TextField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -129,7 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // 3. Password
+                // Password
                 TextField(
                   controller: _passwordController,
                   obscureText: _isObscure,
@@ -147,11 +140,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // 4. Gender (Revisi 2: Male/Female Only with Colors)
+                // Gender
                 const Text("Gender", style: TextStyle(fontWeight: FontWeight.bold)),
                 Row(
                   children: [
-                    // Male Option
                     Expanded(
                       child: RadioListTile<String>(
                         title: const Text("Male"),
@@ -165,7 +157,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    // Female Option
                     Expanded(
                       child: RadioListTile<String>(
                         title: const Text("Female"),
@@ -182,7 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 
-                // 5. Age
+                //Age
                 TextField(
                   controller: _ageController,
                   keyboardType: TextInputType.number,
@@ -197,7 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 32),
 
-                // --- BUTTON ---
+                // BUTTON
                 SizedBox(
                   height: 50,
                   child: ElevatedButton(
@@ -220,14 +211,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const SizedBox(height: 24),
 
-                // --- LOGIN LINK ---
+                //LOGIN
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Sudah punya akun? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pop(context); // Kembali ke login
+                        Navigator.pop(context);
                       },
                       child: const Text(
                         "Login di sini",
@@ -239,8 +230,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                
-                // Revisi 3: Tip di bawah sudah dihapus
               ],
             ),
           ),

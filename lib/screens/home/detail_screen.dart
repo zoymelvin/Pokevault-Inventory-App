@@ -4,7 +4,7 @@ import '../../models/pokemon_model.dart';
 
 class DetailScreen extends StatefulWidget {
   final PokemonModel pokemon;
-  final String trainerName; // owner display (masih kepake di Entry Info aja)
+  final String trainerName;
 
   const DetailScreen({
     super.key,
@@ -90,7 +90,6 @@ class _DetailScreenState extends State<DetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ===== HEADER (gradient + back + FULL COVER IMAGE) =====
             SizedBox(
               height: 240,
               child: Stack(
@@ -110,13 +109,12 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   ),
 
-                  // Gambar memenuhi header (boleh crop)
                   Positioned.fill(
                     child: Hero(
                       tag: p.id,
                       child: Image.network(
                         p.imageUrl,
-                        fit: BoxFit.cover, // FULL COVER
+                        fit: BoxFit.cover,
                         errorBuilder: (c, o, s) => Container(
                           color: Colors.black12,
                           child: const Center(
@@ -127,7 +125,6 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   ),
 
-                  // overlay biar teks tetap kebaca
                   Positioned.fill(
                     child: Container(
                       color: Colors.white.withOpacity(0.08),
@@ -165,14 +162,12 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
 
-            // ===== CONTENT =====
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // name + favorite icon
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -242,7 +237,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
                     const SizedBox(height: 14),
 
-                    // ===== Stats Row (Level & CP) style punyamu =====
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

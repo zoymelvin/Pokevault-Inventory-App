@@ -12,15 +12,13 @@ class AddPokemonScreen extends StatefulWidget {
 }
 
 class _AddPokemonScreenState extends State<AddPokemonScreen> {
-  // 1. Controller untuk Input
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _imageController = TextEditingController();
-
-  // 2. State Variables
+  
   bool _isLoading = false;
-  String _selectedType = 'Fire'; // Default Value
+  String _selectedType = 'Fire'; 
 
-  // List Tipe Pokemon
+  
   final List<String> _types = [
     'Fire', 'Water', 'Grass', 'Electric', 'Psychic', 
     'Ice', 'Dragon', 'Dark', 'Fairy', 'Normal', 
@@ -28,7 +26,6 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
     'Ghost', 'Bug', 'Steel'
   ];
 
-  // Helper: Warna Chip kecil di sebelah dropdown (Opsional visual)
   Color _getTypeColor(String type) {
     switch (type) {
       case 'Fire': return Colors.orange;
@@ -39,9 +36,7 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
     }
   }
 
-  // --- FUNGSI UTAMA: CATCH & SAVE ---
   void _catchPokemon() async {
-    // Validasi: Nama & Gambar wajib diisi
     if (_nameController.text.isEmpty || _imageController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Nama dan URL Gambar wajib diisi!")),
@@ -52,16 +47,16 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // 1. LOGIKA RANDOM STATS (Sesuai Request)
+      // LOGIKA RANDOM STATS 
       final random = Random();
       int randomLevel = random.nextInt(100) + 1; // Level 1 - 100
       int randomCP = random.nextInt(1900) + 1000; // CP 100 - 2000
 
-      // 2. Ambil UID User yang sedang login
+      // Ambil UID User yang sedang login
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) throw Exception("User tidak ditemukan!");
 
-      // 3. Bungkus Data ke Model
+      // Bungkus Data ke Model
       PokemonModel newPokemon = PokemonModel(
         name: _nameController.text.trim(),
         type: _selectedType,
@@ -71,10 +66,10 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
         uid: user.uid, // PENTING: ID Pemilik
       );
 
-      // 4. Kirim ke Firestore
+      // Kirim ke Firestore
       await DatabaseService().addPokemon(newPokemon);
 
-      // 5. Sukses! Reset Form
+      // Sukses! Reset Form
       _nameController.clear();
       _imageController.clear();
       setState(() => _selectedType = 'Fire');
@@ -115,7 +110,6 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // --- HEADER (Sesuai Desain) ---
               Row(
                 children: [
                   const Icon(Icons.catching_pokemon, size: 48, color: Colors.redAccent),
@@ -133,7 +127,6 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
               ),
               const SizedBox(height: 30),
 
-              // --- FORM: NAMA POKEMON ---
               const Text("Nama Pokemon", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               const SizedBox(height: 8),
               TextField(
@@ -154,7 +147,7 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
               ),
               const SizedBox(height: 20),
 
-              // --- FORM: TIPE ELEMEN ---
+              // FORM TIPE ELEMEN
               const Text("Tipe Elemen", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               const SizedBox(height: 8),
               Row(
@@ -206,11 +199,10 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
               // --- FORM: GAMBAR POKEMON (URL) ---
               const Text("Gambar Pokemon", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               const SizedBox(height: 8),
-              
-              // Input URL (Menggantikan tombol Upload tapi tampilan mirip)
+
               TextField(
                 controller: _imageController,
-                onChanged: (v) => setState(() {}), // Refresh preview saat ketik
+                onChanged: (v) => setState(() {}),
                 decoration: InputDecoration(
                   hintText: "Paste URL Image here...",
                   prefixIcon: const Icon(Icons.image, color: Colors.orangeAccent),
@@ -218,7 +210,7 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
                     borderRadius: BorderRadius.circular(12),
                     borderSide: const BorderSide(style: BorderStyle.solid),
                   ),
-                  enabledBorder: OutlineInputBorder( // Efek garis putus-putus ala "Upload"
+                  enabledBorder: OutlineInputBorder( 
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: Colors.grey.shade300),
                   ),
@@ -226,12 +218,12 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
               ),
               const SizedBox(height: 12),
 
-              // --- PREVIEW IMAGE BOX ---
+              // PREVIEW IMAGE BOX 
               Container(
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF0F3F8), // Warna abu muda kebiruan
+                  color: const Color(0xFFF0F3F8),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: _imageController.text.isNotEmpty
@@ -260,7 +252,6 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
               
               const SizedBox(height: 40),
 
-              // --- ACTION BUTTONS ---
               Row(
                 children: [
                   // Tombol Cancel
@@ -300,8 +291,6 @@ class _AddPokemonScreenState extends State<AddPokemonScreen> {
                   ),
                 ],
               ),
-              
-              // Area Tip (Hint) DIHAPUS sesuai request
             ],
           ),
         ),
